@@ -13,12 +13,7 @@ export default class GameScene extends Phaser.Scene {
       
     create ()
     {
-        const tomba = new Tomba({scene:this, x: 0, y: this.game.config.height});
-        
-        // this.tomba = this.physics.add.sprite(0, this.game.config.height, 'tomba');
-        // this.physics.add.sprite()
-        
-        // this.tomba.setCollideWorldBounds(true);
+        this.tomba = new Tomba({scene:this, x: 0, y: this.game.config.height});
 
         // let walkingFrameNames = this.anims.generateFrameNames('tomba', {
         //     start: 16, end: 31, zeroPad: 3, prefix:'frame', suffix:'.png'});
@@ -57,28 +52,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     update() {
-        //this.walk();
+        this.tomba.update();
     }
 
-    walk() {
-        const cursors = this.input.keyboard.createCursorKeys();
-   
-        if(cursors.left.isDown){
-            
-            this.tomba.setVelocityX(-300);
-
-            this.tomba.anims.play('walking', true);
-            this.tomba.flipX = true;
-
-        } else if(cursors.right.isDown){
-            this.tomba.setVelocityX(300);
-            this.tomba.anims.play('walking', true);
-            this.tomba.flipX = false;
-        }
-        else{
-            this.tomba.setVelocityX(0);
-            this.tomba.anims.play('idle')
-
-        }
-    }
 }
