@@ -1,5 +1,5 @@
-export const changeTextureFrameNames = (url, prefix)=>{
-    const jsonData = require('./assets/tomba.json');
+export const changeTextureFrameNames = (prefix)=>{
+    const jsonData = require('./assets/tomba2.json');
 
     const tombaFrames = jsonData.textures[0].frames;
     
