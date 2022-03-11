@@ -6,7 +6,7 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
         super(config.scene, config.x, config.y, 'tomba', 'frame000.png');
 
         this.scene = config.scene;
-        this.maxJump = -200;
+        this.maxJump = -400;
 
         config.scene.add.existing(this);
         config.scene.physics.add.existing(this);
@@ -35,15 +35,22 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
         this.scene.anims.create({
             key: 'jump',
             frames: this.animationFrames.jump,
-            frameRate: 30,
+            frameRate: 15,
             repeat: 0
         });
+
+        this.cursors = this.scene.input.keyboard.createCursorKeys();
     }
 
     update() {
         //stop tomba from being in the jumping state
+        if(this.grabbing) this.body.drag.y = 1000;
+        else this.body.drag.y = 0;
+        
         if(this.body.blocked.down) this.isJumping = false;
-
+        if(this.grabbing && !this.cursors.up.isDown)
+            this.grabbing = false;
+        this.grabWall();
         this.move();
     }
 
@@ -89,9 +96,18 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
 
     jump(){
         this.isJumping = true;
-        
         this.body.setVelocityY(this.maxJump);
         this.anims.play('jump', true);
+        //console.log(this.body);
     }
+
+    grabWall(){
+        if(!this.isJumping) return;
+        if((this.body.blocked.right || this.body.blocked.left) && this.cursors.up.isDown){
+            this.grabbing = true;
+        }
+    }
+
+    
 }
 
