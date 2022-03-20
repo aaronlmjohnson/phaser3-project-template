@@ -48,9 +48,11 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
         });
 
         this.cursors = this.scene.input.keyboard.createCursorKeys();
+        
     }
 
     update() {
+        console.log(this.isJumping);
         //stick tomba to the wall
         this.body.drag.y = this.grabbing ? 1000 : 0;
 
@@ -58,7 +60,7 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
         if(this.body.blocked.down) this.isJumping = false;
 
         //stop tomba from grabbing wall when up button released
-        if(this.grabbing && !this.cursors.up.isDown)
+        if(this.grabbing && this.cursors.left.isDown || this.cursors.right.isDown)
             this.grabbing = false;
 
         this.grabWall();
@@ -78,32 +80,39 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
     }
 
     move(){
-        const cursors = this.scene.input.keyboard.createCursorKeys();
-   
-        if(cursors.left.isDown){
-            if(this.isJumping) return;
-            this.body.setVelocityX(-300);
-            this.anims.play('walking', true);
-            this.flipX = true;
+        if(this.cursors.left.isDown)
+            this.moveLeft()
+        else if(this.cursors.right.isDown)
+            this.moveRight();
+        else
+        this.setIdle();
 
-        } else if(cursors.right.isDown){
-            if(this.isJumping) return;
-            this.body.setVelocityX(300);
-            this.anims.play('walking', true);
-            this.flipX = false;
-        }else{
-            if(this.isJumping) return;
+        if(this.cursors.up.isDown) this.jump();
+    }
+
+    moveRight(){
+        if(this.isJumping) return;
+        this.body.setVelocityX(300);
+        this.anims.play('walking', true);
+        this.flipX = false;
+    }
+
+    moveLeft(){
+        if(this.isJumping) return;
+        this.body.setVelocityX(-300);
+        this.anims.play('walking', true);
+        this.flipX = true;
+    }
+
+    setIdle(){
+        if(this.isJumping) return;
             
-            this.body.setVelocityX(0);
-            this.anims.play('idle');
-        }
-
-        if(cursors.up.isDown && this.body.blocked.down){
-            this.jump();
-        }
+        this.body.setVelocityX(0);
+        this.anims.play('idle');
     }
 
     jump(){
+        console.log('increase velocity');
         this.isJumping = true;
         this.body.setVelocityY(this.maxJump);
         this.anims.play('jump', true);
@@ -111,10 +120,14 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
 
     grabWall(){
         if(!this.isJumping) return;
-        if((this.body.blocked.right || this.body.blocked.left) && this.cursors.up.isDown){
+        if((this.body.blocked.right || this.body.blocked.left) ){
             this.grabbing = true;
             this.anims.play('grab-wall');
         }
+    }
+    isKeyDown(){
+        for(let key in this.cursors)
+            if(this.cursors[key].isDown) return true;
     }
 
     
