@@ -14,26 +14,10 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
 
         this.body.setCollideWorldBounds(true);
         tombaAnimations(this.scene);
-        // this.animationFrames = {};
-        
-        // this.createAnimationFrames(16, 31, 'walk');
-        // this.createAnimationFrames(0, 0, 'idle');
+
         // this.createAnimationFrames(59, 62, 'jump');
         //this.createAnimationFrames(126, 126, 'grabWall');
         
-        // this.scene.anims.create({
-        //     key: 'walking', 
-        //     frames: this.animationFrames.walk, 
-        //     frameRate: 30, 
-        //     repeat: -1
-        // });
-
-        // this.scene.anims.create({
-        //     key: 'idle',
-        //     frames: this.animationFrames.idle,
-        //     frameRate: 0,
-        //     repeat: 0
-        // });
 
         // this.scene.anims.create({
         //     key: 'jump',
@@ -108,7 +92,7 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
 
     setIdle(){         
         this.body.setVelocityX(0);
-        //this.anims.play('idle');
+        this.anims.play('idle');
     }
 
     jump(){

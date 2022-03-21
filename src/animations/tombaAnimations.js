@@ -22,11 +22,14 @@ const tombaAnimations = (scene)=>{
         });
     }
 
-    
-
     const _walk = (()=>{
         _createAnimationFrames(16, 31, 'walk');
         _createAnim('walk', animationFrames.walk, 30, -1);
+    })();
+
+    const _idle = (()=>{
+        _createAnimationFrames(0, 0, 'idle');
+        _createAnim('idle', animationFrames.idle, 0, -1);
     })();
 
 
