@@ -1,4 +1,5 @@
 import 'phaser'
+import tombaAnimations from '../animations/tombaAnimations';
 
 export default class Tomba extends Phaser.GameObjects.Sprite{
     
@@ -12,40 +13,43 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
         config.scene.physics.add.existing(this);
 
         this.body.setCollideWorldBounds(true);
-        this.animationFrames = {};
-
-        this.createAnimationFrames(16, 31, 'walk');
-        this.createAnimationFrames(0, 0, 'idle');
-        this.createAnimationFrames(59, 62, 'jump');
-        this.createAnimationFrames(126, 126, 'grabWall');
+        tombaAnimations(this.scene);
+        // this.animationFrames = {};
         
-        this.scene.anims.create({
-            key: 'walking', 
-            frames: this.animationFrames.walk, 
-            frameRate: 30, 
-            repeat: -1
-        }, );
+        // this.createAnimationFrames(16, 31, 'walk');
+        // this.createAnimationFrames(0, 0, 'idle');
+        // this.createAnimationFrames(59, 62, 'jump');
+        //this.createAnimationFrames(126, 126, 'grabWall');
+        
+        // this.scene.anims.create({
+        //     key: 'walking', 
+        //     frames: this.animationFrames.walk, 
+        //     frameRate: 30, 
+        //     repeat: -1
+        // });
 
-        this.scene.anims.create({
-            key: 'idle',
-            frames: this.animationFrames.idle,
-            frameRate: 0,
-            repeat: 0
-        });
+        // this.scene.anims.create({
+        //     key: 'idle',
+        //     frames: this.animationFrames.idle,
+        //     frameRate: 0,
+        //     repeat: 0
+        // });
 
-        this.scene.anims.create({
-            key: 'jump',
-            frames: this.animationFrames.jump,
-            frameRate: 15,
-            repeat: 0
-        });
+        // this.scene.anims.create({
+        //     key: 'jump',
+        //     frames: this.animationFrames.jump,
+        //     frameRate: 15,
+        //     repeat: 0
+        // });
 
-        this.scene.anims.create({
-            key: 'grab-wall',
-            frames: this.animationFrames.grabWall,
-            frameRate: 0,
-            repeat: 0
-        });
+        // this.scene.anims.create({
+        //     key: 'grab-wall',
+        //     frames: this.animationFrames.grabWall,
+        //     frameRate: 0,
+        //     repeat: 0
+        // });
+
+
 
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         
@@ -92,26 +96,26 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
 
     moveRight(){
         this.body.setVelocityX(300);
-        this.anims.play('walking', true);
+        this.anims.play('walk', true);
         this.flipX = false;
     }
 
     moveLeft(){
         this.body.setVelocityX(-300);
-        this.anims.play('walking', true);
+        this.anims.play('walk', true);
         this.flipX = true;
     }
 
     setIdle(){         
         this.body.setVelocityX(0);
-        this.anims.play('idle');
+        //this.anims.play('idle');
     }
 
     jump(){
         console.log(this.isJumping);
         this.isJumping = true;
         this.body.setVelocityY(this.maxJump);
-        this.anims.play('jump', true);
+        //this.anims.play('jump', true);
     }
 
     // grabWall(){
