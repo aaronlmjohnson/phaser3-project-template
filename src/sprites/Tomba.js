@@ -96,10 +96,9 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
     }
 
     jump(){
-        console.log(this.isJumping);
         this.isJumping = true;
         this.body.setVelocityY(this.maxJump);
-        //this.anims.play('jump', true);
+        this.anims.play('jump', true);
     }
 
     // grabWall(){

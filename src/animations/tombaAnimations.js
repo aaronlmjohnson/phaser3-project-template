@@ -32,7 +32,10 @@ const tombaAnimations = (scene)=>{
         _createAnim('idle', animationFrames.idle, 0, -1);
     })();
 
-
+    const _jump = (()=>{
+        _createAnimationFrames(59, 62, 'jump');
+        _createAnim('jump', animationFrames.jump, 15, 0);
+    })();
 }
 
 export default tombaAnimations;
