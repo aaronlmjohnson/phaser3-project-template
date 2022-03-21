@@ -52,18 +52,17 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
     }
 
     update() {
-        console.log(this.isJumping);
         //stick tomba to the wall
         this.body.drag.y = this.grabbing ? 1000 : 0;
 
         //stop tomba from being in the jumping state
-        if(this.body.blocked.down) this.isJumping = false;
+        if(this.body.blocked.down && this.isJumping) this.isJumping = false;
 
         //stop tomba from grabbing wall when up button released
-        if(this.grabbing && this.cursors.left.isDown || this.cursors.right.isDown)
-            this.grabbing = false;
+        // if(this.grabbing && this.cursors.left.isDown || this.cursors.right.isDown)
+        //     this.grabbing = false;
 
-        this.grabWall();
+        // this.grabWall();
         this.move();
     }
 
@@ -80,6 +79,7 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
     }
 
     move(){
+        if(this.isJumping) return;
         if(this.cursors.left.isDown)
             this.moveLeft()
         else if(this.cursors.right.isDown)
@@ -91,44 +91,40 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
     }
 
     moveRight(){
-        if(this.isJumping) return;
         this.body.setVelocityX(300);
         this.anims.play('walking', true);
         this.flipX = false;
     }
 
     moveLeft(){
-        if(this.isJumping) return;
         this.body.setVelocityX(-300);
         this.anims.play('walking', true);
         this.flipX = true;
     }
 
-    setIdle(){
-        if(this.isJumping) return;
-            
+    setIdle(){         
         this.body.setVelocityX(0);
         this.anims.play('idle');
     }
 
     jump(){
-        console.log('increase velocity');
+        console.log(this.isJumping);
         this.isJumping = true;
         this.body.setVelocityY(this.maxJump);
         this.anims.play('jump', true);
     }
 
-    grabWall(){
-        if(!this.isJumping) return;
-        if((this.body.blocked.right || this.body.blocked.left) ){
-            this.grabbing = true;
-            this.anims.play('grab-wall');
-        }
-    }
-    isKeyDown(){
-        for(let key in this.cursors)
-            if(this.cursors[key].isDown) return true;
-    }
+    // grabWall(){
+    //     if(!this.isJumping) return;
+    //     if((this.body.blocked.right || this.body.blocked.left) ){
+    //         this.grabbing = true;
+    //         this.anims.play('grab-wall');
+    //     }
+    // }
+    // isKeyDown(){
+    //     for(let key in this.cursors)
+    //         if(this.cursors[key].isDown) return true;
+    // }
 
     
 }
