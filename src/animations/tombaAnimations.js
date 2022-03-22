@@ -23,8 +23,18 @@ const tombaAnimations = (scene)=>{
     }
 
     const _walk = (()=>{
-        _createAnimationFrames(16, 31, 'walk');
-        _createAnim('walk', animationFrames.walk, 30, -1);
+        _createAnimationFrames(10, 16, 'walk');
+        _createAnim('walk', animationFrames.walk, 30, 0);
+    })();
+
+    const _jogStart = (()=>{
+        _createAnimationFrames(24, 31, 'jogStart');
+        _createAnim('jogStart', animationFrames.jogStart, 30, 0);
+    })();
+
+    const _jog = (()=>{
+        _createAnimationFrames(17, 31, 'jog');
+        _createAnim('jog', animationFrames.jog, 30, -1);
     })();
 
     const _idle = (()=>{

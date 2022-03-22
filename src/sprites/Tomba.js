@@ -5,7 +5,7 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
     
     constructor(config){
         super(config.scene, config.x, config.y, 'tomba', 'frame000.png');
-
+        this.setScale(2);
         this.scene = config.scene;
         this.maxJump = -400;
 
@@ -20,10 +20,8 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
     }
 
     update() {
-
         //stop tomba from being in the jumping state
         if(this.body.blocked.down && this.isJumping) this.isJumping = false;
-
         this.move();
     }
 
@@ -48,18 +46,20 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
         else
         this.setIdle();
 
-        if(this.cursors.up.isDown) this.jump();
+        //if(this.cursors.up.isDown) this.jump();
     }
 
     moveRight(){
-        this.body.setVelocityX(300);
-        this.anims.play('walk', true);
+        this.body.setVelocityX(200);
+        if(this.anims.getName() !==  'walk') this.body.setVelocityX(300);
+        this.walkCycle();
         this.flipX = false;
     }
 
     moveLeft(){
-        this.body.setVelocityX(-300);
-        this.anims.play('walk', true);
+        this.body.setVelocityX(-200);
+        if(this.anims.getName() !==  'walk') this.body.setVelocityX(-300);
+        this.walkCycle();    
         this.flipX = true;
     }
 
@@ -72,6 +72,14 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
         this.isJumping = true;
         this.body.setVelocityY(this.maxJump);
         this.anims.play('jump', true);
+    }
+
+    walkCycle(){
+        if(this.anims.getName() !== 'jog' && this.anims.getName() !== 'jogStart'){
+            this.anims.play('walk', true);
+        };
+        if(this.anims.getName() === 'walk') this.playAfterRepeat('jogStart');
+        if(this.anims.getName() === 'jogStart') this.playAfterRepeat('jog');
     }
 
 }
