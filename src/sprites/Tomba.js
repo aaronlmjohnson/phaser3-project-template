@@ -15,42 +15,15 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
         this.body.setCollideWorldBounds(true);
         tombaAnimations(this.scene);
 
-        // this.createAnimationFrames(59, 62, 'jump');
-        //this.createAnimationFrames(126, 126, 'grabWall');
-        
-
-        // this.scene.anims.create({
-        //     key: 'jump',
-        //     frames: this.animationFrames.jump,
-        //     frameRate: 15,
-        //     repeat: 0
-        // });
-
-        // this.scene.anims.create({
-        //     key: 'grab-wall',
-        //     frames: this.animationFrames.grabWall,
-        //     frameRate: 0,
-        //     repeat: 0
-        // });
-
-
-
         this.cursors = this.scene.input.keyboard.createCursorKeys();
         
     }
 
     update() {
-        //stick tomba to the wall
-        this.body.drag.y = this.grabbing ? 1000 : 0;
 
         //stop tomba from being in the jumping state
         if(this.body.blocked.down && this.isJumping) this.isJumping = false;
 
-        //stop tomba from grabbing wall when up button released
-        // if(this.grabbing && this.cursors.left.isDown || this.cursors.right.isDown)
-        //     this.grabbing = false;
-
-        // this.grabWall();
         this.move();
     }
 
@@ -101,18 +74,5 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
         this.anims.play('jump', true);
     }
 
-    // grabWall(){
-    //     if(!this.isJumping) return;
-    //     if((this.body.blocked.right || this.body.blocked.left) ){
-    //         this.grabbing = true;
-    //         this.anims.play('grab-wall');
-    //     }
-    // }
-    // isKeyDown(){
-    //     for(let key in this.cursors)
-    //         if(this.cursors[key].isDown) return true;
-    // }
-
-    
 }
 
