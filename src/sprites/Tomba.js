@@ -46,7 +46,7 @@ export default class Tomba extends Phaser.GameObjects.Sprite{
         else
         this.setIdle();
 
-        //if(this.cursors.up.isDown) this.jump();
+        if(this.cursors.up.isDown) this.jump();
     }
 
     moveRight(){
